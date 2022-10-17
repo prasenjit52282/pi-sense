@@ -40,7 +40,7 @@ class GasGROVE:
         self.i2c.readfrom_into(self.addr,self.read_buff,start=0,end=4)
 
     def decodeReadBuff(self):
-        return int.from_bytes(self.read_buff)
+        return int.from_bytes(self.read_buff,byteorder='little')
 
     def readModule(self,SIG):
         self.setWriteBuff(SIG)
