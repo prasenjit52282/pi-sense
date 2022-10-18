@@ -23,7 +23,7 @@ class DUST:
 
     def readBuff(self):
         for i in range(40):
-            self.read_buffer[i]=self.serial.read(1)
+            self.read_buffer[i]=int.from_bytes(self.serial.read(1),'little')
             time.sleep(0.01)
 
     def decodeReadBuff(self):
