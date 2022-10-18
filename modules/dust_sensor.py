@@ -1,14 +1,13 @@
-import time
 import serial
 
 class DUST:
-    def __init__(self,port='/dev/ttyS0',baudrate=9600):
+    def __init__(self,port='/dev/ttyUSB0',baudrate=9600):
         self.port=port
         self.baudrate=baudrate
         self.setup()
 
     def setup(self):
-        self.read_buffer=bytearray(40)
+        self.read_buffer=None
         self.serial=serial.Serial(self.port,self.baudrate,timeout=1)
         self.temp,self.hum,self.fmhds,self.pm2_5=None,None,None,None
 
@@ -19,12 +18,10 @@ class DUST:
         self.serial.flushInput()
 
     def waitingFor40Byte(self):
-        while(self.serial.in_waiting<=0):pass
+        while(self.serial.in_waiting<40):pass
 
     def readBuff(self):
-        for i in range(40):
-            self.read_buffer[i]=int.from_bytes(self.serial.read(1),'little')
-            time.sleep(0.01)
+        self.read_buffer=self.serial.read(40)
 
     def decodeReadBuff(self):
         PMS=0;FMHDS=0;TPS=0;HDS=0;CR2=0
