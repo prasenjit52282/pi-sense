@@ -1,3 +1,4 @@
+import time
 import board
 from busio import I2C
 
@@ -21,12 +22,17 @@ class GAS:
 
     def __del__(self):
         self.unPreheat()
+        self.i2c.deinit()
+
+    def delay(self,ms):
+        time.sleep(ms/1000)
 
     def setWriteBuff(self,HEX):
         self.write_buff[0]=HEX
 
     def writeOut(self):
         self.i2c.writeto(self.addr,self.write_buff,start=0,end=1)
+        self.delay(1)
 
     def preheat(self):
         self.setWriteBuff(self.WARMING_UP)
@@ -38,6 +44,7 @@ class GAS:
 
     def readIn(self):
         self.i2c.readfrom_into(self.addr,self.read_buff,start=0,end=4)
+        self.delay(1)
 
     def decodeReadBuff(self):
         return int.from_bytes(self.read_buff,byteorder='little')
