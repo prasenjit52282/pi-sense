@@ -1,3 +1,4 @@
+import time
 import serial
 
 class DUST:
@@ -18,10 +19,12 @@ class DUST:
         self.serial.flushInput()
 
     def waitingFor40Byte(self):
-        while(self.serial.in_waiting<40):pass
+        while(self.serial.in_waiting<=0):pass
 
     def readBuff(self):
-        self.read_buffer=self.serial.read(40)
+        for i in range(40):
+            self.read_buffer[i]=self.serial.read(1)
+            time.sleep(0.01)
 
     def decodeReadBuff(self):
         PMS=0;FMHDS=0;TPS=0;HDS=0;CR2=0
