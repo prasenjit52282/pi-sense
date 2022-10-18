@@ -8,7 +8,7 @@ class DUST:
         self.setup()
 
     def setup(self):
-        self.read_buffer=None
+        self.read_buffer=bytearray(40)
         self.serial=serial.Serial(self.port,self.baudrate,timeout=1)
         self.temp,self.hum,self.fmhds,self.pm2_5=None,None,None,None
 
