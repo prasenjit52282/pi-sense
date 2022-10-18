@@ -1,7 +1,7 @@
 import board
 from busio import I2C
 
-class GasGROVE:
+class GAS:
     GM_102B=0x01 #NO2
     GM_302B=0x03 #C2H5CH
     GM_502B=0x05 #VOC
@@ -59,11 +59,3 @@ class GasGROVE:
 
     def readCO(self):
         return self.readModule(self.GM_702B)
-
-    def readAll(self):
-        return {
-            'NO2':self.readNO2(),
-            'C2H5CH':self.readC2H5CH(),
-            'VOC':self.readVOC(),
-            'CO':self.readCO()
-        }
