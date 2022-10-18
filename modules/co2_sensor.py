@@ -4,6 +4,7 @@ class CO2:
     def __init__(self,port='/dev/ttyUSB0',baudrate=9600):
         self.port=port
         self.baudrate=baudrate
+        self.setup()
 
     def setup(self):
         self.read_buffer=None
